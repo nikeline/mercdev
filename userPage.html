@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link href="userPage.css" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Nunito:700&display=swap" rel="stylesheet">
+  </head>
+  <body >
+   <img src="w-mercury-development@2x.png">
+	 <div id="user">
+	   	<div id="Photo"></div>
+	    <h3 id="Name"></h3>
+	    <button class="b_butt" onclick="logout()"  ><span class="Text">Logout</span></button>
+	   </div>
+
+	 </div>
+  </body>
+  <script >
+  	
+let url = "https://us-central1-mercdev-academy.cloudfunctions.net/login" 
+
+  	function logout(){
+
+  		window.location.replace("index.html");
+  	}
+  	get();
+  async	function get() {
+  	console.log(sessionStorage.getItem('email'));
+  	console.log(sessionStorage.getItem('password'));
+  	let user = {
+  		email: sessionStorage.getItem('email'),
+  		password: sessionStorage.getItem('password')
+  	}
+  	
+  	 let date = await fetch( url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(user)
+  });
+  	 res = await date.json();
+  	 console.log(res)
+  	 document.getElementById('Photo').style.backgroundImage = `url(${res.photoUrl})`;
+  	 document.getElementById('Name').innerHTML = res.name;
+  	 
+}
+
+
+  </script>
+  </html>
